@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Tuple, List
+from checker import Checker
 
 @dataclass
 class CheckerBoard:
@@ -87,37 +88,7 @@ class CheckerBoard:
             self.check_end_game()
             self.move_checker(source, destination)
 
-@dataclass
-class Checker:
-    color: str
-    position: Tuple[int, int]
-    captured: bool
-    isKing: bool
 
-    @property
-    def get_color(self):
-        return self.color
-
-    @property
-    def get_position(self):
-        return self.position
-
-    def set_position(self, new_position):
-        self.position = new_position
-
-    @property
-    def is_captured(self):
-        return self.captured
-
-    def set_captured(self, if_captured):
-        self.captured = if_captured
-
-    @property
-    def is_king(self):
-        return self.isKing
-
-    def set_king(self, if_king):
-        self.isKing = if_king
 
 
 if __name__ == "__main__":
