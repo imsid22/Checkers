@@ -21,18 +21,33 @@ BLACK = (0, 0, 0)
 
 
 while game_running:
+
+    # Draw the game graphics
+    CELL_SIZE = WINDOW_SIZE[0] // checker_board.n  # set the cell size to fit 8 rows
+    RADIUS = (CELL_SIZE // 2) - 10  # set the radius of the checkers
+
     # Handle user input
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # Check if the user clicked on a valid checker to select it
+            x, y = event.pos
+            row = y // CELL_SIZE
+            col = x // CELL_SIZE
+            checker = checker_board.board[row][col]
+            if checker != "" and not checker.is_captured and checker.get_color == (
+            "B" if len(valid_moves) % 2 == 0 else "W"):
+                selected_checker = checker
+                valid_moves = checker_board.get_valid_moves(checker)
+
+            # Check if the user clicked on a valid move to move the selected checker
+            elif selected_checker is not None and (row, col) in valid_moves:
+                checker_board.move_checker(selected_checker.get_position(), (row, col))
+                selected_checker = None
+                valid_moves = []
 
     # Update the game state
-
-    # Draw the game graphics
-    CELL_SIZE = WINDOW_SIZE[0] // checker_board.n # set the cell size to fit 8 rows
-    RADIUS = (CELL_SIZE // 2) - 10  # set the radius of the checkers
-
-
     for row in range(checker_board.n):
         for col in range(checker_board.n):
             if (row + col) % 2 == 0:

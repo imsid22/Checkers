@@ -33,6 +33,9 @@ class CheckerBoard:
         for row in printing_board:
             print(row)
 
+    def get_valid_moves(self):
+        pass
+
     def valid_move(self, source, destination):
         # current_position = checker.get_position
         if self.board[source[0]][source[1]] == "":

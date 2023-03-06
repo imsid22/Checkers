@@ -6,7 +6,7 @@ from typing import Tuple
 class Checker:
     color: str
     position: Tuple[int, int]
-    captured: bool
+    captured: bool = False
     isKing: bool = False
 
     @property
