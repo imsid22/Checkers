@@ -1,5 +1,5 @@
 # IMPORTS
-from checkers.constants import WIDTH, HEIGHT
+from checkers.constants import WIDTH, HEIGHT, CELL_SIZE
 from checkers.checkerboard import CheckerBoard
 import pygame
 
@@ -14,10 +14,17 @@ WINDOW = pygame.display.set_mode(window_size)
 pygame.display.set_caption('Checkers Game')
 
 
+def get_position_from_interaction(pos):
+    x, y = pos
+    row = y // CELL_SIZE
+    col = x // CELL_SIZE
+    return row, col
+
+
 def main():
     run = True
     clock = pygame.time.Clock()
-    Checker_Board = CheckerBoard()
+    checker_board = CheckerBoard()
 
     while run:
         clock.tick(FPS)
@@ -27,9 +34,11 @@ def main():
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
-
-        Checker_Board.draw_cells(WINDOW)
+                position = pygame.mouse.get_pos()
+                row, col = get_position_from_interaction(position)
+                checker = checker_board.get_checker(row, col)
+                checker_board.move(checker, 4, 3)
+        checker_board.draw(WINDOW)
         pygame.display.update()
 
     # Quit the entire game

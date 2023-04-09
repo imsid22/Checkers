@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Tuple
-from .constants import RED, WHITE, GREY, CELL_SIZE
+from .constants import RED, BLACK, DARKRED, DARKGREY, CELL_SIZE, CROWN
 import pygame
 
 @dataclass
@@ -8,14 +8,17 @@ class Checker:
     color: Tuple[int, int, int]
     row: int
     col: int
-    padding: int = 10
-    border: int = 2
+    padding: int = 15
+    border: int = 1
     isKing: bool = False
+    direction: int = None
+    x: int = None
+    y: int = None
 
     def __post_init__(self):
         if self.color == RED:
             self.direction = -1
-        elif self.color == WHITE:
+        elif self.color == BLACK:
             self.direction = 1
 
         self.x = 0
@@ -29,11 +32,24 @@ class Checker:
     def set_king(self):
         self.isKing = True
 
-    def draw(self, window):
+    def draw(self, window, color):
         radius = CELL_SIZE // 2 - self.padding
         # Padding for the checker inside a cell
-        pygame.draw.circle(window, GREY, (self.x, self.y), radius + self.border)
-        pygame.draw.circle(window, self.color, (self.x, self.y), radius)
+        if color == BLACK:
+            pygame.draw.circle(window, DARKGREY, (self.x, self.y), radius + self.border)
+            pygame.draw.circle(window, self.color, (self.x, self.y), radius)
+        elif color == RED:
+            pygame.draw.circle(window, DARKRED, (self.x, self.y), radius + self.border)
+            pygame.draw.circle(window, self.color, (self.x, self.y), radius)
+
+        if self.isKing:
+            # blit means to add an image to the screen
+            window.blit(CROWN, (self.x - CROWN.get_width()//2, self.y - CROWN.get_height()//2))
+
+    def move(self, row, col):
+        self.row = row
+        self.col = col
+        self.calculate_position()
 
     # representation of our object
     def __repr__(self):
