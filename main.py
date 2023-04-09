@@ -1,6 +1,6 @@
 # IMPORTS
-from checkerboard import CheckerBoard
-from checkers import WIDTH, HEIGHT
+from checkers.constants import WIDTH, HEIGHT
+from checkers.checkerboard import CheckerBoard
 import pygame
 
 # Frames per second for the game playing rate
@@ -17,6 +17,7 @@ pygame.display.set_caption('Checkers Game')
 def main():
     run = True
     clock = pygame.time.Clock()
+    Checker_Board = CheckerBoard()
 
     while run:
         clock.tick(FPS)
@@ -27,6 +28,9 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pass
+
+        Checker_Board.draw_cells(WINDOW)
+        pygame.display.update()
 
     # Quit the entire game
     pygame.quit()
