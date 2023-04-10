@@ -1,7 +1,7 @@
 import pygame
 
 from dataclasses import dataclass
-from typing import List
+from typing import List, Union
 from .constants import BLACK, RED, BROWN, BEIGE, ROWS, COLS, CELL_SIZE
 from .checker import Checker
 
@@ -51,6 +51,151 @@ class CheckerBoard:
 
     def get_checker(self, row, col):
         return self.board[row][col]
+
+    def get_possible_moves(self, checker: Union):
+        moves = {}
+        if checker.color == RED:
+            up = checker.row - 1
+            right = checker.col + 1
+            left = checker.col - 1
+            if checker.get_king:
+                down = checker.row + 1
+                # Can we go down-left
+                if self.board[down][left] != 0:
+                    further_down = down + 1
+                    further_left = left - 1
+                    if further_down <= 7 and further_left >= 0 and not self.board[further_down][further_left]:
+                        moves[(further_down, further_left)] = [(down, left)]
+                else:
+                    if down <= 7 and left >= 0:
+                        moves[(down, left)] = []
+
+                # Can we go down-right
+                if self.board[down][right] != 0:
+                    further_down = down + 1
+                    further_right = right + 1
+                    if further_down <= 7 and further_right <= 7 and not self.board[further_down][further_right]:
+                        moves[(further_down, further_right)] = [(down, right)]
+                else:
+                    if down <= 7 and right <= 7:
+                        moves[(down, right)] = []
+
+                # Can we go up-left
+                if self.board[up][left] != 0:
+                    further_up = up - 1
+                    further_left = left - 1
+                    if further_up >= 0 and further_left >= 0 and not self.board[further_up][further_left]:
+                        moves[(further_up, further_left)] = [(up, left)]
+                else:
+                    if up >= 0 and left >= 0:
+                        moves[(up, left)] = []
+
+                # Can we go up-right
+                if self.board[up][right] != 0:
+                    further_up = up - 1
+                    further_right = right + 1
+                    if further_up >= 0 and further_right <= 7 and not self.board[further_up][further_right]:
+                        moves[(further_up, further_right)] = [(up, right)]
+                else:
+                    if up >= 0 and right <= 7:
+                        moves[(up, right)] = []
+
+            else:
+                # Can we go up-left
+                if self.board[up][left] != 0:
+                    further_up = up - 1
+                    further_left = left - 1
+                    if further_up >= 0 and further_left >= 0 and not self.board[further_up][further_left]:
+                        moves[(further_up, further_left)] = [(up, left)]
+                else:
+                    if up >= 0 and left >= 0:
+                        moves[(up, left)] = []
+
+                # Can we go up-right
+                if self.board[up][right] != 0:
+                    further_up = up - 1
+                    further_right = right + 1
+                    if further_up >= 0 and further_right <= 7 and not self.board[further_up][further_right]:
+                        moves[(further_up, further_right)] = [(up, right)]
+                else:
+                    if up >= 0 and right <= 7:
+                        moves[(up, right)] = []
+
+        elif checker.color == BLACK:
+            up = checker.row + 1
+            right = checker.col - 1
+            left = checker.col + 1
+            if checker.get_king:
+                down = checker.row - 1
+                # Can we go down-left
+                if self.board[down][left] != 0:
+                    further_down = down - 1
+                    further_left = left + 1
+                    if further_down >= 0 and further_left <= 7 and not self.board[further_down][further_left]:
+                        moves[(further_down, further_left)] = [(down, left)]
+                else:
+                    if down >= 0 and left <= 7:
+                        moves[(down, left)] = []
+
+                # Can we go down-right
+                if self.board[down][right] != 0:
+                    further_down = down - 1
+                    further_right = right - 1
+                    if further_down >= 0 and further_right >= 0 and not self.board[further_down][further_right]:
+                        moves[(further_down, further_right)] = [(down, right)]
+                else:
+                    if down >= 0 and right >= 0:
+                        moves[(down, right)] = []
+
+                # Can we go up-left
+                if self.board[up][left] != 0:
+                    further_up = up + 1
+                    further_left = left + 1
+                    if further_up <= 7 and further_left <= 7 and not self.board[further_up][further_left]:
+                        moves[(further_up, further_left)] = [(up, left)]
+                else:
+                    if up <= 7 and left <= 7:
+                        moves[(up, left)] = []
+
+                # Can we go up-right
+                if self.board[up][right] != 0:
+                    further_up = up + 1
+                    further_right = right - 1
+                    if further_up <= 7 and further_right >= 0 and not self.board[further_up][further_right]:
+                        moves[(further_up, further_right)] = [(up, right)]
+                else:
+                    if up <= 7 and right >= 0:
+                        moves[(up, right)] = []
+
+            else:
+                # Can we go up-left
+                if self.board[up][left] != 0:
+                    further_up = up + 1
+                    further_left = left + 1
+                    if further_up <= 7 and further_left <= 7 and not self.board[further_up][further_left]:
+                        moves[(further_up, further_left)] = [(up, left)]
+                else:
+                    if up <= 7 and left <= 7:
+                        moves[(up, left)] = []
+
+                # Can we go up-right
+                if self.board[up][right] != 0:
+                    further_up = up + 1
+                    further_right = right - 1
+                    if further_up <= 7 and further_right >= 0 and not self.board[further_up][further_right]:
+                        moves[(further_up, further_right)] = [(up, right)]
+                else:
+                    if up <= 7 and right >= 0:
+                        moves[(up, right)] = []
+
+        return moves
+
+    def remove(self, jumped):
+        for checker in jumped:
+            row, col = checker
+            self.board[row][col] = 0
+
+
 
     # def print_board(self):
     #     printing_board = [['' for _ in range(self.n)] for _ in range(self.n)]

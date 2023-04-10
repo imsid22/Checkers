@@ -16,11 +16,6 @@ class Checker:
     y: int = None
 
     def __post_init__(self):
-        if self.color == RED:
-            self.direction = -1
-        elif self.color == BLACK:
-            self.direction = 1
-
         self.x = 0
         self.y = 0
         self.calculate_position()
@@ -31,6 +26,10 @@ class Checker:
 
     def set_king(self):
         self.isKing = True
+
+    @property
+    def get_king(self):
+        return self.isKing
 
     def draw(self, window, color):
         radius = CELL_SIZE // 2 - self.padding
@@ -50,6 +49,7 @@ class Checker:
         self.row = row
         self.col = col
         self.calculate_position()
+
 
     # representation of our object
     def __repr__(self):

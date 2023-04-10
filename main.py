@@ -1,6 +1,5 @@
 # IMPORTS
-from checkers.constants import WIDTH, HEIGHT, CELL_SIZE
-from checkers.checkerboard import CheckerBoard
+from checkers import WIDTH, HEIGHT, CELL_SIZE, Simulator, RED
 import pygame
 
 # Frames per second for the game playing rate
@@ -24,7 +23,7 @@ def get_position_from_interaction(pos):
 def main():
     run = True
     clock = pygame.time.Clock()
-    checker_board = CheckerBoard()
+    simulator = Simulator(WINDOW)
 
     while run:
         clock.tick(FPS)
@@ -36,10 +35,9 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 position = pygame.mouse.get_pos()
                 row, col = get_position_from_interaction(position)
-                checker = checker_board.get_checker(row, col)
-                checker_board.move(checker, 4, 3)
-        checker_board.draw(WINDOW)
-        pygame.display.update()
+                simulator.select(row, col)
+
+        simulator.update()
 
     # Quit the entire game
     pygame.quit()
