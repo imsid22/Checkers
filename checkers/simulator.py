@@ -43,7 +43,6 @@ class Simulator:
         if checker and checker.color == self.player:
             self.selected = checker
             self.possible_moves = self.board.get_possible_moves(checker)
-            print('moves: ', self.board.get_possible_moves(checker))
             return True
 
         return False
