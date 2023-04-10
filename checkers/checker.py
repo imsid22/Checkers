@@ -50,36 +50,6 @@ class Checker:
         self.col = col
         self.calculate_position()
 
-
     # representation of our object
     def __repr__(self):
         return str(self.color)
-
-
-
-
-
-
-
-
-    # @property
-    # def get_color(self):
-    #     return self.color
-    #
-    # @property
-    # def get_position(self):
-    #     return self.position
-    #
-    # def set_position(self, new_position):
-    #     self.position = new_position
-    #
-    # @property
-    # def is_captured(self):
-    #     return self.captured
-    #
-    # def set_captured(self, if_captured):
-    #     self.captured = if_captured
-    #
-    # @property
-    # def is_king(self):
-    #     return self.isKing
