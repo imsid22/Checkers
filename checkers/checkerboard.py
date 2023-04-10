@@ -194,6 +194,12 @@ class CheckerBoard:
         for checker in jumped:
             row, col = checker
             self.board[row][col] = 0
+            if checker != 0:
+                if checker.color == RED:
+                    self.red_remain -= 1
+                elif checker.color == BLACK:
+                    self.black_remain -= 1
+
 
 
 
