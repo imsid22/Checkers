@@ -1,6 +1,6 @@
 # Checkers Game
 
-This is a Checkers game implemented in Python using the Pygame library. It offers a graphical user interface where users can play against the computer or another player. The game includes all standard Checkers features, with the exception of the double jump for King pieces, which will be added later.
+This is a Checkers game implemented in Python using the Pygame library. It offers a graphical user interface where users can play against another player. The game includes all standard Checkers features, with the exception of the double jump for King pieces, which will be added later.
 
 ## Prerequisites
 
