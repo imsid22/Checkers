@@ -71,4 +71,10 @@ class Simulator:
         elif self.player == BLACK:
             self.player = RED
 
+    def winner(self):
+        if self.board.black_remain <= 0:
+            return 'Congratulations Red! You have won the game!'
+        elif self.board.red_remain <= 0:
+            return 'Congratulations Black! You have won the game!'
 
+        return None

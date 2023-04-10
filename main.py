@@ -28,6 +28,10 @@ def main():
     while run:
         clock.tick(FPS)
 
+        if simulator.winner() is not None:
+            # Winner of the game
+            return simulator.winner()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
