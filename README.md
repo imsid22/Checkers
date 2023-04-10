@@ -41,4 +41,4 @@ I welcome contributions to this project! If you find a bug or would like to add 
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/imsid22/Checkers/blob/main/LICENSE) file for details.
